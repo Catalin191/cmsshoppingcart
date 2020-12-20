@@ -1,12 +1,33 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" th:fragment="nav-front" xmlns:th="">
     <a class="navbar-brand" href="/">CMS ShoppingCart</a>
     <div class="collapse navbar-collapse" >
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active" th:each="page: ${cpages}" th:if="${page.slug != 'home'}">
-                <a class="nav-link" th:href="@{'/' + ${page.slug}}" th:text="${page.title}"></a>
-            </li>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarsExampleDefault"
+        aria-controls="navbarExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        </ul>
+        <div class="collapse navbar-collapse" id="navbarExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active" th:each="page: ${cpages}" th:if="${page.slug != 'home'}">
+                    <a class="nav-link" th:href="@{'/' + ${page.slug}}" th:text="${page.title}"></a>
+                </li>
+
+            </ul>
+
+            <ul class="float-right navbar-nav" th:if="${principal == null}">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/register}">Register</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/login}">Login</a>
+                </li>
+            </ul>
+
+            <form th:if="${principal != null}" methot="post" th:action="@{/logout}">
+                <span class="text-white" th:text="${'Hi ' + principal}"></span>
+                <button class="btn btn-secondary">Logout</button>
+            </form>
+        </div>
 
     </div>
 </nav>
@@ -25,5 +46,10 @@
                 <a class="nav-link" href="/admin/products">Products</a>
             </li>
         </ul>
+
+        <form class="float-right" th:if="${principal != null}" methot="post" th:action="@{/logout}">
+            <span class="text-white" th:text="${'Hi ' + principal}"></span>
+            <button class="btn btn-secondary">Logout</button>
+        </form>
     </div>
 </nav>
